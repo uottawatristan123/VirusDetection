@@ -33,7 +33,7 @@ public class AntiVirus {
 	    for(String virus : virusDefinitions)
 	    {
 	    	try {
-	    		try (Stream<Path> paths = Files.walk(Paths.get("C:\\Users\\Tristan\\Desktop\\SearchLab3"))) {
+	    		try (Stream<Path> paths = Files.walk(Paths.get("src\\FilesToVerify"))) {
 	    		    paths
 	    		        .filter(Files::isRegularFile)
 	    		        .forEach(path -> {
