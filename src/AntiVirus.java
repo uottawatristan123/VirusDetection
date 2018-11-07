@@ -16,7 +16,7 @@ public class AntiVirus {
 		String replaceWith = "xxxxxxxx";
 		// pass the path to the file as a parameter 
 	    File file = 
-	      new File("C:\\Users\\Tristan\\Desktop\\VirusDefinitions.txt"); 
+	      new File("src\\VirusDefinitions.txt"); 
 	    Scanner sc = null;
 		try {
 			sc = new Scanner(file);
