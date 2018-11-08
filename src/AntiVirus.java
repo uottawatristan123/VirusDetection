@@ -7,13 +7,14 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class AntiVirus {
 
 	public static void main(String[] args) {
-		String replaceWith = "xxxxxxxxaaaaa";
+		String replaceWith = "xxxxxxxx";
 		// pass the path to the file as a parameter 
 	    File file = 
 	      new File("src\\VirusDefinitions.txt"); 
@@ -37,15 +38,24 @@ public class AntiVirus {
 	    		    paths
 	    		        .filter(Files::isRegularFile)
 	    		        .forEach(path -> {
-	    		        	try (Stream<String> lines = Files.lines(path)) {
-	 	    		    	   List<String> replaced = lines
-	 	    		    	       .map(line-> line.replaceAll(virus, replaceWith))
-	 	    		    	       .collect(Collectors.toList());
-	 	    		    	   Files.write(Paths.get("src\\InfectedFiles\\Infected" + path.getFileName()), replaced);
-	 	    		    	} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+	    		        		String data = "";
+								try {
+									data = new String(Files.readAllBytes(path));
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+	    		        		if(data.contains(virus))
+	    		        		{
+		 	    		    	    String cleansedFile = data.replaceAll(Pattern.quote(virus), replaceWith);
+		 	    		    	    byte[] cleansedByteArray = cleansedFile.getBytes();
+		 	    		    	    try {
+										Files.write(Paths.get("src\\InfectedFiles\\Infected" + path.getFileName()), cleansedByteArray);
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+	    		        		}
 	    		        });	    		    
 	    		} 
 			} catch (Exception e) {
@@ -55,12 +65,5 @@ public class AntiVirus {
 	    }    
 	     
 	}
-	
-	public static String readFileAsString(String fileName)throws Exception 
-    { 
-      String data = ""; 
-      data = new String(Files.readAllBytes(Paths.get(fileName))); 
-      return data; 
-    }
 
 }
