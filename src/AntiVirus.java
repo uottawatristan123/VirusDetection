@@ -41,7 +41,7 @@ public class AntiVirus {
 	 	    		    	   List<String> replaced = lines
 	 	    		    	       .map(line-> line.replaceAll(virus, replaceWith))
 	 	    		    	       .collect(Collectors.toList());
-	 	    		    	   Files.write(path, replaced);
+	 	    		    	   Files.write(Paths.get("src\\InfectedFiles" + path.getFileName()), replaced);
 	 	    		    	} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
