@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 public class AntiVirus {
 
 	public static void main(String[] args) {
-		String replaceWith = "xxxxxxxx";
+		String replaceWith = "xxxxxxxxaaaaa";
 		// pass the path to the file as a parameter 
 	    File file = 
 	      new File("src\\VirusDefinitions.txt"); 
@@ -41,7 +41,7 @@ public class AntiVirus {
 	 	    		    	   List<String> replaced = lines
 	 	    		    	       .map(line-> line.replaceAll(virus, replaceWith))
 	 	    		    	       .collect(Collectors.toList());
-	 	    		    	   Files.write(Paths.get("src\\InfectedFiles" + path.getFileName()), replaced);
+	 	    		    	   Files.write(Paths.get("src\\InfectedFiles\\Infected" + path.getFileName()), replaced);
 	 	    		    	} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
