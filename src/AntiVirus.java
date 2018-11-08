@@ -15,6 +15,7 @@ public class AntiVirus {
 
 	public static void main(String[] args) {
 		String replaceWith = "xxxxxxxx";
+		System.out.println("Reading the latest virus definition file");
 		// pass the path to the file as a parameter 
 	    File file = 
 	      new File("src\\VirusDefinitions.txt"); 
@@ -29,10 +30,13 @@ public class AntiVirus {
 		List<String> virusDefinitions = new LinkedList<String>();
 	    while (sc.hasNextLine()) 
 	      virusDefinitions.add(sc.nextLine());
+	    System.out.println("Done reading the latest virus definition file");
 	    
 	    
 	    for(String virus : virusDefinitions)
 	    {
+			System.out.println("Searching directory .\\src\\FilesToVerify for Virus: " + virus);
+			System.out.println("-------------------------------------");
 	    	try {
 	    		try (Stream<Path> paths = Files.walk(Paths.get("src\\FilesToVerify"))) {
 	    		    paths
@@ -40,6 +44,7 @@ public class AntiVirus {
 	    		        .forEach(path -> {
 	    		        		String data = "";
 								try {
+									System.out.println("Searching file " + path.getFileName() + " for virus: " + virus);
 									data = new String(Files.readAllBytes(path));
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
@@ -47,6 +52,7 @@ public class AntiVirus {
 								}
 	    		        		if(data.contains(virus))
 	    		        		{
+	    		        			System.out.println("Infected file " + path.getFileName() + " for virus: " + virus);
 		 	    		    	    String cleansedFile = data.replaceAll(Pattern.quote(virus), replaceWith);
 		 	    		    	    byte[] cleansedByteArray = cleansedFile.getBytes();
 		 	    		    	    try {
@@ -55,6 +61,8 @@ public class AntiVirus {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
+		 	    		    	    
+		 	    		    	   System.out.println("Infected file " + path.getFileName() + " moved to directory src\\InfectedFiles");
 	    		        		}
 	    		        });	    		    
 	    		} 
